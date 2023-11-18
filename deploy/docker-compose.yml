@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: hl-backend
+    image: hl-backend
+    build:
+      context: ../apps/backend
+      dockerfile: ./build/Dockerfile
+    ports:
+      - "8081:8080"
+    depends_on:
+      postgres:
+        condition: service_started
+
+  postgres:
+    container_name: hl-postgres
+    image: postgres:latest
+    user: postgres
+    environment:
+      - POSTGRES_DB=helloladies
+      - POSTGRES_PASSWORD=1234
+      - PGDATA=/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    volumes:
+      - hl-pg-data:/var/lib/postgresql/data
+
+volumes:
+  hl-pg-data:
