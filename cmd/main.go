@@ -4,9 +4,9 @@ import (
 	"helloladies/apps/backend/internal/config"
 	"helloladies/apps/backend/internal/handlers"
 	"helloladies/apps/backend/internal/providers/postgres"
-	"helloladies/apps/backend/internal/repositories"
+	"helloladies/apps/backend/internal/repository"
 	"helloladies/apps/backend/internal/server"
-	"helloladies/apps/backend/internal/services"
+	"helloladies/apps/backend/internal/service"
 
 	"github.com/sirupsen/logrus"
 )
@@ -30,9 +30,9 @@ func main() {
 		log.Fatalf("db.Ping: %s", err.Error())
 	}
 
-	repos := repositories.NewRepositories(db, log)
+	repos := repository.NewRepositories(db, log)
 
-	services := services.New(repos, log)
+	services := service.New(repos, log, cfg.JWTConfig)
 
 	handlers := handlers.New(services, log)
 
