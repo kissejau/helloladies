@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"helloladies/apps/backend/internal/lib/jwt"
+	"helloladies/apps/backend/internal/middleware"
 	"helloladies/apps/backend/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -10,27 +12,33 @@ import (
 type Handler struct {
 	services *service.Services
 	log      *logrus.Logger
+	cfg      jwt.Config
 }
 
-func New(services *service.Services, log *logrus.Logger) *Handler {
+func New(services *service.Services, cfg jwt.Config, log *logrus.Logger) *Handler {
 	return &Handler{
 		services: services,
 		log:      log,
+		cfg:      cfg,
 	}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 	router.Use(h.CORSMiddleware())
+	middlewares := middleware.NewMiddlewares(h.cfg)
 
 	api := router.Group("/api")
 	{
-		api.GET("/info", h.Ping)
-
 		auth := api.Group("/auth")
 		{
 			auth.POST("/sign-up", h.SignUp)
 			auth.POST("/sign-in", h.SignIn)
+		}
+
+		logged := api.Group("/logged", middlewares.VerifyToken)
+		{
+			logged.GET("/info", h.Ping)
 		}
 	}
 
