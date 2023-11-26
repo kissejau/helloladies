@@ -23,6 +23,7 @@ require (
 	github.com/gofiber/fiber v1.14.6 // indirect
 	github.com/gofiber/utils v0.0.10 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/golang-migrate/migrate v3.5.4+incompatible // indirect
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/jmoiron/sqlx v1.3.5 // indirect
