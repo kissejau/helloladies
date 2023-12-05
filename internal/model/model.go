@@ -49,3 +49,11 @@ type UserDto struct {
 	Name      string    `db:"name"`
 	BirthDate time.Time `db:"birth_date"`
 }
+
+func UserDtoToUser(dto UserDto) User {
+	return User{
+		Email:     dto.Email,
+		Name:      dto.Name,
+		BirthDate: dto.BirthDate,
+	}
+}

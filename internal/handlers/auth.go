@@ -33,3 +33,7 @@ func (h *Handler) SignUp(c *gin.Context) {
 
 	c.JSON(http.StatusAccepted, token)
 }
+
+func getUserId(c *gin.Context) string {
+	return c.GetString("userId")
+}

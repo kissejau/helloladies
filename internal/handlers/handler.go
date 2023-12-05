@@ -26,7 +26,7 @@ func New(services *service.Services, cfg jwt.Config, log *logrus.Logger) *Handle
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 	router.Use(h.CORSMiddleware())
-	middlewares := middleware.NewMiddlewares(h.cfg)
+	middlewares := middleware.NewMiddlewares(h.cfg, h.services.UsersService)
 
 	api := router.Group("/api")
 	{
@@ -39,6 +39,14 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		logged := api.Group("/logged", middlewares.VerifyToken)
 		{
 			logged.GET("/info", h.Ping)
+
+			users := logged.Group("/users")
+			{
+				users.GET("/get", h.GetUser)
+				users.GET("/all", h.ListUsers)
+				users.PUT("/update", h.UpdateUser)
+				users.DELETE("/delete", h.DeleteUser)
+			}
 		}
 	}
 
