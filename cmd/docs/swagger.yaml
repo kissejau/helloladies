@@ -1,9 +1,0 @@
-basePath: /api
-host: localhost:8081
-info:
-  contact: {}
-  description: helloladies API [go + gin]
-  title: helloladies API
-  version: "1.0"
-paths: {}
-swagger: "2.0"

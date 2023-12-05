@@ -8,3 +8,7 @@ docker:
 
 clear:
 	docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+swagger:
+	swag init -g ./cmd/main.go
+	swag fmt
