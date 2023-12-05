@@ -1,7 +1,7 @@
 package jwt
 
 import (
-	"helloladies/apps/backend/internal/model"
+	"helloladies/internal/model"
 	"time"
 
 	"github.com/golang-jwt/jwt"

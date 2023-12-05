@@ -3,13 +3,13 @@ package middleware
 import (
 	"database/sql"
 	"errors"
-	"helloladies/apps/backend/internal/model"
-	"helloladies/apps/backend/internal/service"
-	"helloladies/apps/backend/pkg/response"
+	"helloladies/internal/model"
+	"helloladies/internal/service"
+	"helloladies/pkg/response"
 	"net/http"
 	"strings"
 
-	jwtGen "helloladies/apps/backend/internal/lib/jwt"
+	jwtGen "helloladies/internal/lib/jwt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"

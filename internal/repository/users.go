@@ -2,7 +2,7 @@ package repository
 
 import (
 	"fmt"
-	"helloladies/apps/backend/internal/model"
+	"helloladies/internal/model"
 
 	"github.com/jmoiron/sqlx"
 )

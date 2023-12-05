@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	jwtGen "helloladies/apps/backend/internal/lib/jwt"
-	"helloladies/apps/backend/internal/service"
+	jwtGen "helloladies/internal/lib/jwt"
+	"helloladies/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
