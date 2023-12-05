@@ -9,6 +9,8 @@ import (
 	"helloladies/internal/service"
 	"log"
 
+	_ "helloladies/cmd/docs"
+
 	"github.com/golang-migrate/migrate"
 	"github.com/golang-migrate/migrate/database/postgres"
 	_ "github.com/golang-migrate/migrate/source/file"
@@ -17,12 +19,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-//	@title			helloladies API
-//	@version		1.0
-//	@description	helloladies API [go + gin]
+// @title helloladies API
+// @version 1.0
+// @description helloladies API [go + gin]
 
-// @host		localhost:8081
-// @BasePath	/api
+// @host localhost:8081
+// @BasePath /api
 func main() {
 	log := logrus.New()
 	cfg, err := config.New()
