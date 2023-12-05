@@ -2,8 +2,8 @@ package service
 
 import (
 	"fmt"
-	"helloladies/apps/backend/internal/model"
-	"helloladies/apps/backend/internal/repository"
+	"helloladies/internal/model"
+	"helloladies/internal/repository"
 
 	"github.com/sirupsen/logrus"
 )

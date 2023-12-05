@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"helloladies/apps/backend/pkg/response"
+	"helloladies/pkg/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

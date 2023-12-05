@@ -1,12 +1,14 @@
 package handlers
 
 import (
-	"helloladies/apps/backend/internal/lib/jwt"
-	"helloladies/apps/backend/internal/middleware"
-	"helloladies/apps/backend/internal/service"
+	"helloladies/internal/lib/jwt"
+	"helloladies/internal/middleware"
+	"helloladies/internal/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Handler struct {
@@ -30,6 +32,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api := router.Group("/api")
 	{
+		api.GET("/info", h.Ping)
+
+		router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		auth := api.Group("/auth")
 		{
 			auth.POST("/sign-up", h.SignUp)
@@ -38,8 +43,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 		logged := api.Group("/logged", middlewares.VerifyToken)
 		{
-			logged.GET("/info", h.Ping)
-
 			users := logged.Group("/users")
 			{
 				users.GET("/get", h.GetUser)

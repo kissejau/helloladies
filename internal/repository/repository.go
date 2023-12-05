@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"helloladies/apps/backend/internal/model"
+	"helloladies/internal/model"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"

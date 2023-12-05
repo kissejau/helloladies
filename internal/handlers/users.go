@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"helloladies/apps/backend/internal/model"
-	"helloladies/apps/backend/pkg/response"
+	"helloladies/internal/model"
+	"helloladies/pkg/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
