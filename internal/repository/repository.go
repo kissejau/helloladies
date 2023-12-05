@@ -13,7 +13,11 @@ const (
 
 type UsersRepository interface {
 	CreateUser(model.UserDto) error
+	GetUserById(string) (model.UserDto, error)
 	GetUserByEmail(string) (model.UserDto, error)
+	UpdateUser(model.UserDto) (model.UserDto, error)
+	DeleteUser(string) error
+	List() ([]model.UserDto, error)
 }
 
 type AuthRepository interface {

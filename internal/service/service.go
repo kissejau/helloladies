@@ -15,12 +15,21 @@ type AuthService interface {
 	Refresh() (model.TokenOut, error)
 }
 
+type UsersService interface {
+	GetUserById(string) (model.User, error)
+	UpdateUser(string, model.User) (model.User, error)
+	DeleteUser(string) error
+	List() ([]model.User, error)
+}
+
 type Services struct {
 	AuthService
+	UsersService
 }
 
 func New(repos *repository.Repositories, log *logrus.Logger, jwtConfig jwt.Config) *Services {
 	return &Services{
-		AuthService: NewAuthService(repos.UsersRepository, jwtConfig),
+		AuthService:  NewAuthService(repos.UsersRepository, jwtConfig),
+		UsersService: NewUserService(repos.UsersRepository, log),
 	}
 }
