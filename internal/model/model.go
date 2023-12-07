@@ -57,3 +57,58 @@ func UserDtoToUser(dto UserDto) User {
 		BirthDate: dto.BirthDate,
 	}
 }
+
+type City struct {
+	Title string `json:"title"`
+}
+
+type CityDto struct {
+	Id        string `db:"id"`
+	Title     string `db:"title"`
+	Confirmed bool   `db:"confirmed"`
+}
+
+type Univ struct {
+	Title string `json:"title"`
+}
+
+type UnivDto struct {
+	Id        string `db:"id"`
+	Title     string `db:"title"`
+	CityId    string `db:"city_id"`
+	Confirmed bool   `db:"confirmed"`
+}
+
+type Teacher struct {
+	Code       string `json:"code"`
+	Name       string `json:"name"`
+	Surname    string `json:"surname"`
+	Patronymic string `json:"patronymic"`
+	Degree     string `json:"degree"`
+}
+
+type TeacherDto struct {
+	Id         string `db:"id"`
+	Code       string `db:"code"`
+	Name       string `db:"name"`
+	Surname    string `db:"surname"`
+	Patronymic string `db:"patronymic"`
+	Degree     string `db:"degree"`
+	UnivId     string `db:"univ_id"`
+	Confirmed  bool   `db:"confirmed"`
+}
+
+type Review struct {
+	Text        string `json:"description"`
+	Description string `json:"rating"`
+	TeacherId   string `json:"teacher_id"`
+	UserId      string `json:"user_id"`
+}
+
+type ReviewDto struct {
+	Id          string `db:"id"`
+	Description string `db:"description"`
+	Rating      string `db:"rating"`
+	TeacherId   string `db:"teacher_id"`
+	UserId      string `db:"user_id"`
+}
