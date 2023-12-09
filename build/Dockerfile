@@ -4,10 +4,10 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -o broker ./cmd/main.go
+RUN go build -o backend ./cmd/main.go
 
 FROM alpine:latest
 WORKDIR /
-COPY --from=BuildStage /app/broker broker
+COPY --from=BuildStage /app/backend backend
 COPY --from=BuildStage /app/.env .env
-ENTRYPOINT ["./broker"]
+ENTRYPOINT ["./backend"]

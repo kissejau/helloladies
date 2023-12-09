@@ -2,9 +2,9 @@ package config
 
 import (
 	"fmt"
-	"helloladies/apps/backend/internal/lib/jwt"
-	"helloladies/apps/backend/internal/providers/postgres"
-	"helloladies/apps/backend/internal/server"
+	"helloladies/internal/lib/jwt"
+	"helloladies/internal/providers/postgres"
+	"helloladies/internal/server"
 	"os"
 	"path/filepath"
 	"strconv"

@@ -1,13 +1,15 @@
 package main
 
 import (
-	"helloladies/apps/backend/internal/config"
-	"helloladies/apps/backend/internal/handlers"
-	postgresProvider "helloladies/apps/backend/internal/providers/postgres"
-	"helloladies/apps/backend/internal/repository"
-	"helloladies/apps/backend/internal/server"
-	"helloladies/apps/backend/internal/service"
+	"helloladies/internal/config"
+	"helloladies/internal/handlers"
+	postgresProvider "helloladies/internal/providers/postgres"
+	"helloladies/internal/repository"
+	"helloladies/internal/server"
+	"helloladies/internal/service"
 	"log"
+
+	_ "helloladies/docs"
 
 	"github.com/golang-migrate/migrate"
 	"github.com/golang-migrate/migrate/database/postgres"
@@ -17,9 +19,18 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+//	@title						helloladies API
+//	@version					1.0
+//	@description				helloladies API [go + gin]
+//
+//	@host						localhost:8081
+//	@BasePath					/api
+//
+//	@securityDefinitions.apikey	Token
+//	@in							header
+//	@name						Authorization
 func main() {
 	log := logrus.New()
-
 	cfg, err := config.New()
 	if err != nil {
 		log.Fatalf("config.New: %s", err.Error())

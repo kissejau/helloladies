@@ -1,9 +1,9 @@
 package service
 
 import (
-	"helloladies/apps/backend/internal/lib/jwt"
-	"helloladies/apps/backend/internal/model"
-	"helloladies/apps/backend/internal/repository"
+	"helloladies/internal/lib/jwt"
+	"helloladies/internal/model"
+	"helloladies/internal/repository"
 
 	"github.com/sirupsen/logrus"
 )
