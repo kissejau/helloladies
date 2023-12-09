@@ -60,21 +60,32 @@ func UserDtoToUser(dto UserDto) User {
 }
 
 type City struct {
+	Code  string `json:"code"`
 	Title string `json:"title"`
 }
 
 type CityDto struct {
 	Id        string `db:"id"`
+	Code      string `db:"code"`
 	Title     string `db:"title"`
 	Confirmed bool   `db:"confirmed"`
 }
 
+func CityDtoToCity(cityDto CityDto) City {
+	return City{
+		Code:  cityDto.Code,
+		Title: cityDto.Title,
+	}
+}
+
 type Univ struct {
+	Code  string `json:"code"`
 	Title string `json:"title"`
 }
 
 type UnivDto struct {
 	Id        string `db:"id"`
+	Code      string `db:"code"`
 	Title     string `db:"title"`
 	CityId    string `db:"city_id"`
 	Confirmed bool   `db:"confirmed"`
@@ -100,6 +111,7 @@ type TeacherDto struct {
 }
 
 type Review struct {
+	Code        string `json:"code"`
 	Text        string `json:"description"`
 	Description string `json:"rating"`
 	TeacherId   string `json:"teacher_id"`
@@ -108,6 +120,7 @@ type Review struct {
 
 type ReviewDto struct {
 	Id          string `db:"id"`
+	Code        string `db:"code"`
 	Description string `db:"description"`
 	Rating      string `db:"rating"`
 	TeacherId   string `db:"teacher_id"`
