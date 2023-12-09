@@ -48,6 +48,7 @@ type UserDto struct {
 	Password  string    `db:"password"`
 	Name      string    `db:"name"`
 	BirthDate time.Time `db:"birth_date"`
+	IsAdmin   bool      `db:"is_admin"`
 }
 
 func UserDtoToUser(dto UserDto) User {

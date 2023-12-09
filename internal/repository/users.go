@@ -28,12 +28,12 @@ func (r UsersRepositoryImpl) CreateUser(signUpDto model.UserDto) error {
 
 func (r UsersRepositoryImpl) GetUserById(id string) (model.UserDto, error) {
 	var userDto model.UserDto
-	query := fmt.Sprintf("SELECT id, email, password, name, birth_date FROM %s WHERE id=$1 LIMIT 1", usersTable)
+	query := fmt.Sprintf("SELECT id, email, password, name, birth_date, is_admin FROM %s WHERE id=$1 LIMIT 1", usersTable)
 
 	row := r.db.QueryRow(query, id)
 	if err := row.Scan(&userDto.Id,
 		&userDto.Email, &userDto.Password,
-		&userDto.Name, &userDto.BirthDate); err != nil {
+		&userDto.Name, &userDto.BirthDate, &userDto.IsAdmin); err != nil {
 		return model.UserDto{}, fmt.Errorf("row.Scan: %w", err)
 	}
 	return userDto, nil

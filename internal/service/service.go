@@ -20,6 +20,7 @@ type UsersService interface {
 	UpdateUser(string, model.User) (model.User, error)
 	DeleteUser(string) error
 	List() ([]model.User, error)
+	IsAdmin(string) bool
 }
 
 type Services struct {

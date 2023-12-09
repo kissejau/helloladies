@@ -76,3 +76,11 @@ func (s *UsersServiceImpl) List() ([]model.User, error) {
 	}
 	return users, nil
 }
+
+func (s *UsersServiceImpl) IsAdmin(id string) bool {
+	userDto, err := s.usersRepo.GetUserById(id)
+	if err != nil || !userDto.IsAdmin {
+		return false
+	}
+	return true
+}
