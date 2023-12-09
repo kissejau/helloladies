@@ -43,6 +43,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 		logged := api.Group("/logged", middlewares.VerifyToken)
 		{
+			logged.GET("/info", h.Ping)
+
 			users := logged.Group("/users")
 			{
 				users.GET("/get", h.GetUser)
