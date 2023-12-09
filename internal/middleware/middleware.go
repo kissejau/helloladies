@@ -9,6 +9,7 @@ import (
 
 type AuthMiddleware interface {
 	VerifyToken(c *gin.Context)
+	VerifyAdminPermissions(c *gin.Context)
 }
 
 type Middlewares struct {
