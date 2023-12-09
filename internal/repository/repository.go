@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	usersTable = "users"
+	usersTable  = "users"
+	citiesTable = "cities"
 )
 
 type UsersRepository interface {
@@ -20,17 +21,27 @@ type UsersRepository interface {
 	List() ([]model.UserDto, error)
 }
 
+type CitiesRepository interface {
+	CreateCity(model.CityDto) error
+	List() ([]model.CityDto, error)
+	UpdateCity(string, model.CityDto) (model.CityDto, error)
+	DeleteCity(string) error
+	GetIdByCode(string) (string, error)
+}
+
 type AuthRepository interface {
 }
 
 type Repositories struct {
 	AuthRepository
 	UsersRepository
+	CitiesRepository
 }
 
 func NewRepositories(db *sqlx.DB, log *logrus.Logger) *Repositories {
 	return &Repositories{
-		AuthRepository:  NewAuthRepository(db),
-		UsersRepository: NewUsersRepository(db),
+		AuthRepository:   NewAuthRepository(db),
+		UsersRepository:  NewUsersRepository(db),
+		CitiesRepository: NewCitiesRepository(db),
 	}
 }

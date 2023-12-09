@@ -11,6 +11,10 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+const (
+	errIncorrectBody = "incorrect body"
+)
+
 type Handler struct {
 	services *service.Services
 	log      *logrus.Logger
@@ -51,6 +55,18 @@ func (h *Handler) InitRoutes() *gin.Engine {
 				users.GET("/all", h.ListUsers)
 				users.PUT("/update", h.UpdateUser)
 				users.DELETE("/delete", h.DeleteUser)
+			}
+
+			cities := logged.Group("/cities")
+			{
+				cities.GET("/all", h.ListCities)
+
+				admin := cities.Group("/", middlewares.VerifyAdminPermissions)
+				{
+					admin.PUT("/update", h.UpdateCity)
+					admin.POST("/create", h.CreateCity)
+					admin.DELETE("/delete", h.DeleteCity)
+				}
 			}
 		}
 	}

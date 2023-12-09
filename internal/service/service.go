@@ -1,11 +1,17 @@
 package service
 
 import (
+	"fmt"
 	"helloladies/internal/lib/jwt"
 	"helloladies/internal/model"
 	"helloladies/internal/repository"
 
+	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
+)
+
+const (
+	errIncorrectCode = "incorrect code"
 )
 
 type AuthService interface {
@@ -23,14 +29,27 @@ type UsersService interface {
 	IsAdmin(string) bool
 }
 
+type CitiesService interface {
+	CreateCity(model.City) error
+	List() ([]model.City, error)
+	UpdateCity(string, model.City) (model.City, error)
+	DeleteCity(string) error
+}
+
 type Services struct {
 	AuthService
 	UsersService
+	CitiesService
 }
 
 func New(repos *repository.Repositories, log *logrus.Logger, jwtConfig jwt.Config) *Services {
 	return &Services{
-		AuthService:  NewAuthService(repos.UsersRepository, jwtConfig),
-		UsersService: NewUserService(repos.UsersRepository, log),
+		AuthService:   NewAuthService(repos.UsersRepository, jwtConfig),
+		UsersService:  NewUserService(repos.UsersRepository, log),
+		CitiesService: NewCitiesService(repos.CitiesRepository, log),
 	}
+}
+
+func generateCode(data string) string {
+	return fmt.Sprintf("%s-%s", uuid.NewString()[:3], data)
 }

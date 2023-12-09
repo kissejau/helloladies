@@ -8,10 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const (
-	errIncorrectBody = "incorrect body"
-)
-
 func (h *Handler) GetUser(c *gin.Context) {
 	userId := getUserId(c)
 	user, err := h.services.UsersService.GetUserById(userId)
