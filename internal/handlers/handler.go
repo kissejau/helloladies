@@ -68,6 +68,19 @@ func (h *Handler) InitRoutes() *gin.Engine {
 					admin.DELETE("/delete", h.DeleteCity)
 				}
 			}
+
+			univs := logged.Group("/univs")
+			{
+				univs.GET("/all", h.ListUnivs)
+				univs.GET("/list", h.GetUnivsByCity) // by city code
+
+				admin := univs.Group("/", middlewares.VerifyAdminPermissions)
+				{
+					admin.PUT("/update", h.UpdateUniv)
+					admin.POST("/create", h.CreateUniv)
+					admin.DELETE("/delete", h.DeleteUniv)
+				}
+			}
 		}
 	}
 

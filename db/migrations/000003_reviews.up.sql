@@ -9,7 +9,7 @@ CREATE TABLE univs (
     id VARCHAR PRIMARY KEY,
     code VARCHAR NOT NULL UNIQUE,
     title VARCHAR NOT NULL,
-    city_id VARCHAR REFERENCES cities (id) ON DELETE NO ACTION,
+    city_id VARCHAR REFERENCES cities (id) ON DELETE CASCADE,
     confirmed BOOLEAN
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE teachers (
     surname VARCHAR NOT NULL,
     patronymic VARCHAR NOT NULL,
     degree VARCHAR,
-    univ_id VARCHAR REFERENCES univs (id) ON DELETE NO ACTION,
+    univ_id VARCHAR REFERENCES univs (id) ON DELETE CASCADE,
     confirmed BOOLEAN
 );
 
@@ -29,8 +29,8 @@ CREATE TABLE reviews (
     code VARCHAR NOT NULL UNIQUE,
     description VARCHAR NOT NULL,
     rating INTEGER NOT NULL,
-    teacher_id VARCHAR REFERENCES teachers (id) ON DELETE NO ACTION,
-    user_id VARCHAR REFERENCES users (id) ON DELETE NO ACTION
+    teacher_id VARCHAR REFERENCES teachers (id) ON DELETE CASCADE,
+    user_id VARCHAR REFERENCES users (id) ON DELETE CASCADE
 );
 
 

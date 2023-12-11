@@ -32,14 +32,23 @@ type UsersService interface {
 type CitiesService interface {
 	CreateCity(model.City) error
 	List() ([]model.City, error)
-	UpdateCity(string, model.City) (model.City, error)
+	UpdateCity(model.City) (model.City, error)
 	DeleteCity(string) error
+}
+
+type UnivsService interface {
+	CreateUniv(cityCode string, univ model.Univ) error
+	List() ([]model.Univ, error)
+	UpdateUniv(cityCode string, univ model.Univ) (model.Univ, error)
+	DeleteUniv(univCode string) error
+	GetUnivsByCity(cityCode string) ([]model.Univ, error)
 }
 
 type Services struct {
 	AuthService
 	UsersService
 	CitiesService
+	UnivsService
 }
 
 func New(repos *repository.Repositories, log *logrus.Logger, jwtConfig jwt.Config) *Services {
@@ -47,6 +56,7 @@ func New(repos *repository.Repositories, log *logrus.Logger, jwtConfig jwt.Confi
 		AuthService:   NewAuthService(repos.UsersRepository, jwtConfig),
 		UsersService:  NewUserService(repos.UsersRepository, log),
 		CitiesService: NewCitiesService(repos.CitiesRepository, log),
+		UnivsService:  NewUnivsService(repos.UnivsRepository, repos.CitiesRepository, log),
 	}
 }
 

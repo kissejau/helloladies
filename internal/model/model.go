@@ -91,6 +91,13 @@ type UnivDto struct {
 	Confirmed bool   `db:"confirmed"`
 }
 
+func UnivDtoToUniv(univDto UnivDto) Univ {
+	return Univ{
+		Code:  univDto.Code,
+		Title: univDto.Title,
+	}
+}
+
 type Teacher struct {
 	Code       string `json:"code"`
 	Name       string `json:"name"`

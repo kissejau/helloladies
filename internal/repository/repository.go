@@ -10,6 +10,7 @@ import (
 const (
 	usersTable  = "users"
 	citiesTable = "cities"
+	univsTable  = "univs"
 )
 
 type UsersRepository interface {
@@ -29,6 +30,15 @@ type CitiesRepository interface {
 	GetIdByCode(string) (string, error)
 }
 
+type UnivsRepository interface {
+	CreateUniv(model.UnivDto) error
+	List() ([]model.UnivDto, error)
+	UpdateUniv(univDtos model.UnivDto) (model.UnivDto, error)
+	DeleteUniv(id string) error
+	GetIdByCode(univCode string) (string, error)
+	GetUnivsByCity(cityCode string) ([]model.UnivDto, error)
+}
+
 type AuthRepository interface {
 }
 
@@ -36,6 +46,7 @@ type Repositories struct {
 	AuthRepository
 	UsersRepository
 	CitiesRepository
+	UnivsRepository
 }
 
 func NewRepositories(db *sqlx.DB, log *logrus.Logger) *Repositories {
@@ -43,5 +54,6 @@ func NewRepositories(db *sqlx.DB, log *logrus.Logger) *Repositories {
 		AuthRepository:   NewAuthRepository(db),
 		UsersRepository:  NewUsersRepository(db),
 		CitiesRepository: NewCitiesRepository(db),
+		UnivsRepository:  NewUnivsRepository(db),
 	}
 }
