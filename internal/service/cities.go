@@ -58,8 +58,8 @@ func (s *CitiesServiceImpl) List() ([]model.City, error) {
 	return cities, nil
 }
 
-func (s *CitiesServiceImpl) UpdateCity(code string, city model.City) (model.City, error) {
-	id, err := s.citiesRepo.GetIdByCode(code)
+func (s *CitiesServiceImpl) UpdateCity(city model.City) (model.City, error) {
+	id, err := s.citiesRepo.GetIdByCode(city.Code)
 	if err != nil {
 		s.log.Printf("s.citiesRepo.GetIdByCode: %s", err.Error())
 		return model.City{}, fmt.Errorf(errIncorrectCode)
@@ -67,7 +67,7 @@ func (s *CitiesServiceImpl) UpdateCity(code string, city model.City) (model.City
 
 	cityDto := model.CityDto{
 		Id:        id,
-		Code:      code,
+		Code:      city.Code,
 		Title:     city.Title,
 		Confirmed: true,
 	}

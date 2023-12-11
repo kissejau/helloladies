@@ -34,14 +34,12 @@ func (h *Handler) ListCities(c *gin.Context) {
 
 func (h *Handler) UpdateCity(c *gin.Context) {
 	var city model.City
-
-	code := c.Query("code")
 	if err := c.Bind(&city); err != nil {
 		response.NewErrorResponse(c, http.StatusBadRequest, errIncorrectBody)
 		return
 	}
 
-	_, err := h.services.CitiesService.UpdateCity(code, city)
+	_, err := h.services.CitiesService.UpdateCity(city)
 	if err != nil {
 		response.NewErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
@@ -51,13 +49,7 @@ func (h *Handler) UpdateCity(c *gin.Context) {
 }
 
 func (h *Handler) DeleteCity(c *gin.Context) {
-	var city model.City
-
 	code := c.Query("code")
-	if err := c.Bind(&city); err != nil {
-		response.NewErrorResponse(c, http.StatusBadRequest, errIncorrectBody)
-		return
-	}
 
 	err := h.services.CitiesService.DeleteCity(code)
 	if err != nil {
