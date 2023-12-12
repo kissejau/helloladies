@@ -52,12 +52,21 @@ type TeachersService interface {
 	GetTeachersByUniv(univCode string) ([]model.Teacher, error)
 }
 
+type ReviewsService interface {
+	CreateReview(userId, teacherCode string, review model.Review) error
+	List() ([]model.Review, error)
+	GetReviewsByTeacher(teacherCode string) ([]model.Review, error)
+	UpdateReview(userId, teacherCode string, review model.Review) (model.Review, error)
+	DeleteReview(reviewCode string) error
+}
+
 type Services struct {
 	AuthService
 	UsersService
 	CitiesService
 	UnivsService
 	TeachersService
+	ReviewsService
 }
 
 func New(repos *repository.Repositories, log *logrus.Logger, jwtConfig jwt.Config) *Services {
@@ -67,6 +76,7 @@ func New(repos *repository.Repositories, log *logrus.Logger, jwtConfig jwt.Confi
 		CitiesService:   NewCitiesService(repos.CitiesRepository, log),
 		UnivsService:    NewUnivsService(repos.UnivsRepository, repos.CitiesRepository, log),
 		TeachersService: NewTeachersService(repos.UnivsRepository, repos.TeachersRepository, log),
+		ReviewsService:  NewReviewsService(repos.ReviewsRepository, repos.TeachersRepository, log),
 	}
 }
 

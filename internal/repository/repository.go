@@ -12,6 +12,7 @@ const (
 	citiesTable   = "cities"
 	univsTable    = "univs"
 	teachersTable = "teachers"
+	reviewsTable  = "reviews"
 )
 
 type UsersRepository interface {
@@ -49,6 +50,15 @@ type TeachersRepository interface {
 	GetTeachersByUniv(univCode string) ([]model.TeacherDto, error)
 }
 
+type ReviewsRepository interface {
+	CreateReview(review model.ReviewDto) error
+	List() ([]model.ReviewDto, error)
+	GetReviewsByTeacher(teacherId string) ([]model.ReviewDto, error)
+	UpdateReview(reviewDto model.ReviewDto) (model.ReviewDto, error)
+	DeleteReview(reviewId string) error
+	GetIdByCode(reviewCode string) (string, error)
+}
+
 type AuthRepository interface {
 }
 
@@ -58,6 +68,7 @@ type Repositories struct {
 	CitiesRepository
 	UnivsRepository
 	TeachersRepository
+	ReviewsRepository
 }
 
 func NewRepositories(db *sqlx.DB, log *logrus.Logger) *Repositories {
@@ -67,5 +78,6 @@ func NewRepositories(db *sqlx.DB, log *logrus.Logger) *Repositories {
 		CitiesRepository:   NewCitiesRepository(db),
 		UnivsRepository:    NewUnivsRepository(db),
 		TeachersRepository: NewTeachersRepository(db),
+		ReviewsRepository:  NewReviewsRepository(db),
 	}
 }

@@ -129,17 +129,23 @@ func TeacherDtoToTeacher(teacherDto TeacherDto) Teacher {
 
 type Review struct {
 	Code        string `json:"code"`
-	Text        string `json:"description"`
-	Description string `json:"rating"`
-	TeacherId   string `json:"teacher_id"`
-	UserId      string `json:"user_id"`
+	Description string `json:"description"`
+	Rating      int    `json:"rating"`
 }
 
 type ReviewDto struct {
 	Id          string `db:"id"`
 	Code        string `db:"code"`
 	Description string `db:"description"`
-	Rating      string `db:"rating"`
+	Rating      int    `db:"rating"`
 	TeacherId   string `db:"teacher_id"`
 	UserId      string `db:"user_id"`
+}
+
+func ReviewDtoToReview(reviewDto ReviewDto) Review {
+	return Review{
+		Code:        reviewDto.Code,
+		Description: reviewDto.Description,
+		Rating:      reviewDto.Rating,
+	}
 }

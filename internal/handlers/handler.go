@@ -94,6 +94,19 @@ func (h *Handler) InitRoutes() *gin.Engine {
 					admin.DELETE("/delete", h.DeleteTeacher)
 				}
 			}
+
+			reviews := logged.Group("/reviews")
+			{
+				reviews.GET("/all", h.ListReviews)
+				reviews.GET("/list", h.GetReviewsByTeacher)
+
+				admin := reviews.Group("/", middlewares.VerifyAdminPermissions)
+				{
+					admin.PUT("/update", h.UpdateReview)
+					admin.POST("/create", h.CreateReview)
+					admin.DELETE("/delete", h.DeleteReview)
+				}
+			}
 		}
 	}
 
