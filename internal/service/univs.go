@@ -67,6 +67,11 @@ func (s *UnivsServiceImpl) List() ([]model.Univ, error) {
 }
 
 func (s *UnivsServiceImpl) UpdateUniv(cityCode string, univ model.Univ) (model.Univ, error) {
+	cityId, err := s.citiesRepo.GetIdByCode(cityCode)
+	if err != nil {
+		s.log.Printf("s.citiesRepo.GetIdByCode: %s", err.Error())
+		return model.Univ{}, fmt.Errorf(errIncorrectCode)
+	}
 
 	univId, err := s.univsRepo.GetIdByCode(univ.Code)
 	if err != nil {
@@ -78,6 +83,7 @@ func (s *UnivsServiceImpl) UpdateUniv(cityCode string, univ model.Univ) (model.U
 		Id:        univId,
 		Code:      univ.Code,
 		Title:     univ.Title,
+		CityId:    cityId,
 		Confirmed: true,
 	}
 	if _, err := s.univsRepo.UpdateUniv(univDto); err != nil {

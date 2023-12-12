@@ -8,9 +8,10 @@ import (
 )
 
 const (
-	usersTable  = "users"
-	citiesTable = "cities"
-	univsTable  = "univs"
+	usersTable    = "users"
+	citiesTable   = "cities"
+	univsTable    = "univs"
+	teachersTable = "teachers"
 )
 
 type UsersRepository interface {
@@ -31,12 +32,21 @@ type CitiesRepository interface {
 }
 
 type UnivsRepository interface {
-	CreateUniv(model.UnivDto) error
+	CreateUniv(univDto model.UnivDto) error
 	List() ([]model.UnivDto, error)
-	UpdateUniv(univDtos model.UnivDto) (model.UnivDto, error)
+	UpdateUniv(univDto model.UnivDto) (model.UnivDto, error)
 	DeleteUniv(id string) error
 	GetIdByCode(univCode string) (string, error)
 	GetUnivsByCity(cityCode string) ([]model.UnivDto, error)
+}
+
+type TeachersRepository interface {
+	CreateTeacher(teacherDto model.TeacherDto) error
+	List() ([]model.TeacherDto, error)
+	UpdateTeacher(teacherDto model.TeacherDto) (model.TeacherDto, error)
+	DeleteTeacher(id string) error
+	GetIdByCode(teacherCode string) (string, error)
+	GetTeachersByUniv(univCode string) ([]model.TeacherDto, error)
 }
 
 type AuthRepository interface {
@@ -47,13 +57,15 @@ type Repositories struct {
 	UsersRepository
 	CitiesRepository
 	UnivsRepository
+	TeachersRepository
 }
 
 func NewRepositories(db *sqlx.DB, log *logrus.Logger) *Repositories {
 	return &Repositories{
-		AuthRepository:   NewAuthRepository(db),
-		UsersRepository:  NewUsersRepository(db),
-		CitiesRepository: NewCitiesRepository(db),
-		UnivsRepository:  NewUnivsRepository(db),
+		AuthRepository:     NewAuthRepository(db),
+		UsersRepository:    NewUsersRepository(db),
+		CitiesRepository:   NewCitiesRepository(db),
+		UnivsRepository:    NewUnivsRepository(db),
+		TeachersRepository: NewTeachersRepository(db),
 	}
 }

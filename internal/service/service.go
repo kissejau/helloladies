@@ -44,19 +44,29 @@ type UnivsService interface {
 	GetUnivsByCity(cityCode string) ([]model.Univ, error)
 }
 
+type TeachersService interface {
+	CreateTeacher(univCode string, teacher model.Teacher) error
+	List() ([]model.Teacher, error)
+	UpdateTeacher(univCode string, teacher model.Teacher) (model.Teacher, error)
+	DeleteTeacher(teacherCode string) error
+	GetTeachersByUniv(univCode string) ([]model.Teacher, error)
+}
+
 type Services struct {
 	AuthService
 	UsersService
 	CitiesService
 	UnivsService
+	TeachersService
 }
 
 func New(repos *repository.Repositories, log *logrus.Logger, jwtConfig jwt.Config) *Services {
 	return &Services{
-		AuthService:   NewAuthService(repos.UsersRepository, jwtConfig),
-		UsersService:  NewUserService(repos.UsersRepository, log),
-		CitiesService: NewCitiesService(repos.CitiesRepository, log),
-		UnivsService:  NewUnivsService(repos.UnivsRepository, repos.CitiesRepository, log),
+		AuthService:     NewAuthService(repos.UsersRepository, jwtConfig),
+		UsersService:    NewUserService(repos.UsersRepository, log),
+		CitiesService:   NewCitiesService(repos.CitiesRepository, log),
+		UnivsService:    NewUnivsService(repos.UnivsRepository, repos.CitiesRepository, log),
+		TeachersService: NewTeachersService(repos.UnivsRepository, repos.TeachersRepository, log),
 	}
 }
 

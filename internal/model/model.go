@@ -117,6 +117,16 @@ type TeacherDto struct {
 	Confirmed  bool   `db:"confirmed"`
 }
 
+func TeacherDtoToTeacher(teacherDto TeacherDto) Teacher {
+	return Teacher{
+		Code:       teacherDto.Code,
+		Name:       teacherDto.Name,
+		Surname:    teacherDto.Surname,
+		Patronymic: teacherDto.Patronymic,
+		Degree:     teacherDto.Degree,
+	}
+}
+
 type Review struct {
 	Code        string `json:"code"`
 	Text        string `json:"description"`
