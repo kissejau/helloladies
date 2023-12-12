@@ -8,10 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const (
-	errIncorrectBody = "incorrect body"
-)
-
 //	@Summary	GetUser
 //	@Security	Token
 //	@Tags		users
@@ -53,7 +49,6 @@ func (h *Handler) DeleteUser(c *gin.Context) {
 //	@Tags		users
 //	@Accept		json
 //	@Produce	json
-//
 //	@Param		input	body		model.User	true	"user data"
 //
 //	@Success	200		{object}	model.User

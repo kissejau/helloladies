@@ -16,11 +16,12 @@ import (
 )
 
 const (
-	errMissedToken    = "token wasn't recieved"
-	errIncorrectToken = "incorrect token"
-	errAuth           = "error while auth"
-	errInvalidToken   = "invalid token"
-	errUserNotExists  = "user does not exists"
+	errMissedToken      = "token wasn't recieved"
+	errIncorrectToken   = "incorrect token"
+	errAuth             = "error while auth"
+	errInvalidToken     = "invalid token"
+	errUserNotExists    = "user does not exists"
+	errAdminPermissions = "need admin permissions"
 )
 
 type AuthMiddlewareImpl struct {
@@ -82,4 +83,13 @@ func (m AuthMiddlewareImpl) verifyUser(id string) error {
 		return err
 	}
 	return nil
+}
+
+func (m AuthMiddlewareImpl) VerifyAdminPermissions(c *gin.Context) {
+	id := c.GetString("userId")
+	if fl := m.usersService.IsAdmin(id); !fl {
+		response.NewErrorResponse(c, http.StatusBadRequest, errAdminPermissions)
+		return
+	}
+	c.Next()
 }
