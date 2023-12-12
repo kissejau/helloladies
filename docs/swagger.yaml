@@ -1,5 +1,12 @@
 basePath: /api
 definitions:
+  model.City:
+    properties:
+      code:
+        type: string
+      title:
+        type: string
+    type: object
   model.SignIn:
     properties:
       email:
@@ -97,6 +104,108 @@ paths:
       summary: SignUp
       tags:
       - auth
+  /logged/cities/all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.City'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: ListCities
+      tags:
+      - cities
+  /logged/cities/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: city data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.City'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: CreateCity
+      tags:
+      - cities
+  /logged/cities/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: city's code
+        in: query
+        name: city_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: DeleteCity
+      tags:
+      - cities
+  /logged/cities/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: city data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.City'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: UpdateCity
+      tags:
+      - cities
   /logged/users/all:
     get:
       consumes:
