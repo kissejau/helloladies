@@ -104,8 +104,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 				admin := reviews.Group("/", middlewares.VerifyAdminPermissions)
 				{
-					reviews.GET("/all", h.ListReviews)
-
+					admin.GET("/all", h.ListReviews)
 				}
 			}
 		}
