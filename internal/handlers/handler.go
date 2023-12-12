@@ -71,11 +71,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 			univs := logged.Group("/univs")
 			{
-				univs.GET("/all", h.ListUnivs)
 				univs.GET("/list", h.GetUnivsByCity) // by city code
 
 				admin := univs.Group("/", middlewares.VerifyAdminPermissions)
 				{
+					univs.GET("/all", h.ListUnivs)
 					admin.PUT("/update", h.UpdateUniv)
 					admin.POST("/create", h.CreateUniv)
 					admin.DELETE("/delete", h.DeleteUniv)
@@ -84,11 +84,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 			teachers := logged.Group("/teachers")
 			{
-				teachers.GET("/all", h.ListTeachers)
 				teachers.GET("/list", h.GetTeacherByUniv)
 
 				admin := teachers.Group("/", middlewares.VerifyAdminPermissions)
 				{
+					teachers.GET("/all", h.ListTeachers)
 					admin.PUT("/update", h.UpdateTeacher)
 					admin.POST("/create", h.CreateTeacher)
 					admin.DELETE("/delete", h.DeleteTeacher)
@@ -97,14 +97,15 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 			reviews := logged.Group("/reviews")
 			{
-				reviews.GET("/all", h.ListReviews)
 				reviews.GET("/list", h.GetReviewsByTeacher)
+				reviews.PUT("/update", h.UpdateReview)
+				reviews.POST("/create", h.CreateReview)
+				reviews.DELETE("/delete", h.DeleteReview)
 
 				admin := reviews.Group("/", middlewares.VerifyAdminPermissions)
 				{
-					admin.PUT("/update", h.UpdateReview)
-					admin.POST("/create", h.CreateReview)
-					admin.DELETE("/delete", h.DeleteReview)
+					reviews.GET("/all", h.ListReviews)
+
 				}
 			}
 		}
