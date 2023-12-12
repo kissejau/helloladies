@@ -11,6 +11,10 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+const (
+	errIncorrectBody = "incorrect body"
+)
+
 type Handler struct {
 	services *service.Services
 	log      *logrus.Logger
@@ -51,6 +55,58 @@ func (h *Handler) InitRoutes() *gin.Engine {
 				users.GET("/all", h.ListUsers)
 				users.PUT("/update", h.UpdateUser)
 				users.DELETE("/delete", h.DeleteUser)
+			}
+
+			cities := logged.Group("/cities")
+			{
+				cities.GET("/all", h.ListCities)
+
+				admin := cities.Group("/", middlewares.VerifyAdminPermissions)
+				{
+					admin.PUT("/update", h.UpdateCity)
+					admin.POST("/create", h.CreateCity)
+					admin.DELETE("/delete", h.DeleteCity)
+				}
+			}
+
+			univs := logged.Group("/univs")
+			{
+				univs.GET("/list", h.GetUnivsByCity) // by city code
+
+				admin := univs.Group("/", middlewares.VerifyAdminPermissions)
+				{
+					univs.GET("/all", h.ListUnivs)
+					admin.PUT("/update", h.UpdateUniv)
+					admin.POST("/create", h.CreateUniv)
+					admin.DELETE("/delete", h.DeleteUniv)
+				}
+			}
+
+			teachers := logged.Group("/teachers")
+			{
+				teachers.GET("/list", h.GetTeacherByUniv)
+
+				admin := teachers.Group("/", middlewares.VerifyAdminPermissions)
+				{
+					teachers.GET("/all", h.ListTeachers)
+					admin.PUT("/update", h.UpdateTeacher)
+					admin.POST("/create", h.CreateTeacher)
+					admin.DELETE("/delete", h.DeleteTeacher)
+				}
+			}
+
+			reviews := logged.Group("/reviews")
+			{
+				reviews.GET("/list", h.GetReviewsByTeacher)
+				reviews.PUT("/update", h.UpdateReview)
+				reviews.POST("/create", h.CreateReview)
+				reviews.DELETE("/delete", h.DeleteReview)
+
+				admin := reviews.Group("/", middlewares.VerifyAdminPermissions)
+				{
+					reviews.GET("/all", h.ListReviews)
+
+				}
 			}
 		}
 	}
