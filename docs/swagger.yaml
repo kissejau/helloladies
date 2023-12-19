@@ -1,5 +1,21 @@
 basePath: /api
 definitions:
+  model.City:
+    properties:
+      code:
+        type: string
+      title:
+        type: string
+    type: object
+  model.Review:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      rating:
+        type: integer
+    type: object
   model.SignIn:
     properties:
       email:
@@ -16,9 +32,29 @@ definitions:
       repeat_password:
         type: string
     type: object
+  model.Teacher:
+    properties:
+      code:
+        type: string
+      degree:
+        type: string
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
   model.TokenOut:
     properties:
       token:
+        type: string
+    type: object
+  model.Univ:
+    properties:
+      code:
+        type: string
+      title:
         type: string
     type: object
   model.User:
@@ -97,6 +133,528 @@ paths:
       summary: SignUp
       tags:
       - auth
+  /logged/cities/all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.City'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: ListCities
+      tags:
+      - cities
+  /logged/cities/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: city data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.City'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: CreateCity
+      tags:
+      - cities
+  /logged/cities/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: city's code
+        in: query
+        name: city_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: DeleteCity
+      tags:
+      - cities
+  /logged/cities/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: city data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.City'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: UpdateCity
+      tags:
+      - cities
+  /logged/reviews/all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Review'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: ListReviews
+      tags:
+      - reviews
+  /logged/reviews/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: teacher's code
+        in: query
+        name: teacher_code
+        required: true
+        type: string
+      - description: review's data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Review'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: CreateReview
+      tags:
+      - reviews
+  /logged/reviews/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: review's code
+        in: query
+        name: review_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: DeleteReviews
+      tags:
+      - reviews
+  /logged/reviews/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: teacher's code
+        in: query
+        name: teacher_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Review'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: GetReviewsByTeacher
+      tags:
+      - reviews
+  /logged/reviews/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: teacher's code
+        in: query
+        name: teacher_code
+        required: true
+        type: string
+      - description: review's data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Review'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: UpdateReview
+      tags:
+      - reviews
+  /logged/teachers/all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Teacher'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: ListTeachers
+      tags:
+      - teachers
+  /logged/teachers/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: university's code
+        in: query
+        name: univ_code
+        required: true
+        type: string
+      - description: teacher's data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Teacher'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: CreateTeacher
+      tags:
+      - teachers
+  /logged/teachers/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: teacher's code
+        in: query
+        name: teacher_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: DeleteTeacher
+      tags:
+      - teachers
+  /logged/teachers/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: univ's code
+        in: query
+        name: univ_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Teacher'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: GetTeachersByUniv
+      tags:
+      - teachers
+  /logged/teachers/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: university's code
+        in: query
+        name: univ_code
+        required: true
+        type: string
+      - description: teacher's data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Teacher'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: UpdateTeacher
+      tags:
+      - teachers
+  /logged/univs/all:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Univ'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: ListUniversities
+      tags:
+      - universities
+  /logged/univs/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: city's code
+        in: query
+        name: city_code
+        required: true
+        type: string
+      - description: university data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Univ'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: CreateUniversity
+      tags:
+      - universities
+  /logged/univs/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: university's code
+        in: query
+        name: univ_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: DeleteUniversity
+      tags:
+      - universities
+  /logged/univs/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: city's code
+        in: query
+        name: city_code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Univ'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: GetUniversitiesByCity
+      tags:
+      - universities
+  /logged/univs/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: city's code
+        in: query
+        name: city_code
+        required: true
+        type: string
+      - description: university data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Univ'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - Token: []
+      summary: UpdateUniversity
+      tags:
+      - universities
   /logged/users/all:
     get:
       consumes:
