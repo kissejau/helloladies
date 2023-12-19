@@ -1,12 +1,23 @@
 package handlers
 
 import (
-	"github.com/gin-gonic/gin"
 	"helloladies/internal/model"
 	"helloladies/pkg/response"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
+//	@Summary	CreateTeacher
+//	@Security	Token
+//	@Tags		teachers
+//	@Accept		json
+//	@Produce	json
+//	@Param		univ_code	query		string			true	"university's code"
+//	@Param		input		body		model.Teacher	true	"teacher's data"
+//	@Success	200			{object}	response.Success
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/teachers/create [post]
 func (h *Handler) CreateTeacher(c *gin.Context) {
 	var teacher model.Teacher
 
@@ -25,6 +36,14 @@ func (h *Handler) CreateTeacher(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusCreated, "teacher was created")
 }
 
+//	@Summary	ListTeachers
+//	@Security	Token
+//	@Tags		teachers
+//	@Accept		json
+//	@Produce	json
+//	@Success	200	{object}	[]model.Teacher
+//	@Failure	400	{object}	response.Error
+//	@Router		/logged/teachers/all [get]
 func (h *Handler) ListTeachers(c *gin.Context) {
 	teachers, err := h.services.TeachersService.List()
 	if err != nil {
@@ -35,6 +54,16 @@ func (h *Handler) ListTeachers(c *gin.Context) {
 	c.JSON(http.StatusAccepted, teachers)
 }
 
+//	@Summary	UpdateTeacher
+//	@Security	Token
+//	@Tags		teachers
+//	@Accept		json
+//	@Produce	json
+//	@Param		univ_code	query		string			true	"university's code"
+//	@Param		input		body		model.Teacher	true	"teacher's data"
+//	@Success	200			{object}	response.Success
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/teachers/update [put]
 func (h *Handler) UpdateTeacher(c *gin.Context) {
 	univCode := c.Query("univ_code")
 
@@ -52,6 +81,15 @@ func (h *Handler) UpdateTeacher(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusAccepted, "teacher was updated")
 }
 
+//	@Summary	DeleteTeacher
+//	@Security	Token
+//	@Tags		teachers
+//	@Accept		json
+//	@Produce	json
+//	@Param		teacher_code	query		string	true	"teacher's code"
+//	@Success	200				{object}	response.Success
+//	@Failure	400				{object}	response.Error
+//	@Router		/logged/teachers/delete [delete]
 func (h *Handler) DeleteTeacher(c *gin.Context) {
 	teacherCode := c.Query("teacher_code")
 
@@ -62,6 +100,15 @@ func (h *Handler) DeleteTeacher(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusAccepted, "teacher was deleted")
 }
 
+//	@Summary	GetTeachersByUniv
+//	@Security	Token
+//	@Tags		teachers
+//	@Accept		json
+//	@Produce	json
+//	@Param		univ_code	query		string	true	"univ's code"
+//	@Success	200			{object}	[]model.Teacher
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/teachers/list [get]
 func (h *Handler) GetTeacherByUniv(c *gin.Context) {
 	univCode := c.Query("univ_code")
 
