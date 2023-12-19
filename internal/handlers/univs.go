@@ -8,16 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary	CreateUniversity
-// @Security	Token
-// @Tags		universities
-// @Accept		json
-// @Produce	json
-// @Param		city_code	query		string		true	"city's code"
-// @Param		input		body		model.Univ	true	"university data"
-// @Success	200			{object}	response.Success
-// @Failure	400			{object}	response.Error
-// @Router		/logged/univs/create [post]
+//	@Summary	CreateUniversity
+//	@Security	Token
+//	@Tags		universities
+//	@Accept		json
+//	@Produce	json
+//	@Param		city_code	query		string		true	"city's code"
+//	@Param		input		body		model.Univ	true	"university data"
+//	@Success	200			{object}	response.Success
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/univs/create [post]
 func (h *Handler) CreateUniv(c *gin.Context) {
 	var univ model.Univ
 
@@ -36,14 +36,14 @@ func (h *Handler) CreateUniv(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusCreated, "university was created")
 }
 
-// @Summary	ListUniversities
-// @Security	Token
-// @Tags		universities
-// @Accept		json
-// @Produce	json
-// @Success	200	{object}	[]model.Univ
-// @Failure	400	{object}	response.Error
-// @Router		/logged/univs/all [get]
+//	@Summary	ListUniversities
+//	@Security	Token
+//	@Tags		universities
+//	@Accept		json
+//	@Produce	json
+//	@Success	200	{object}	[]model.Univ
+//	@Failure	400	{object}	response.Error
+//	@Router		/logged/univs/all [get]
 func (h *Handler) ListUnivs(c *gin.Context) {
 	univs, err := h.services.UnivsService.List()
 	if err != nil {
@@ -54,16 +54,16 @@ func (h *Handler) ListUnivs(c *gin.Context) {
 	c.JSON(http.StatusAccepted, univs)
 }
 
-// @Summary	UpdateUniversity
-// @Security	Token
-// @Tags		universities
-// @Accept		json
-// @Produce	json
-// @Param		city_code	query		string		true	"city's code"
-// @Param		input		body		model.Univ	true	"university data"
-// @Success	200			{object}	response.Success
-// @Failure	400			{object}	response.Error
-// @Router		/logged/univs/update [put]
+//	@Summary	UpdateUniversity
+//	@Security	Token
+//	@Tags		universities
+//	@Accept		json
+//	@Produce	json
+//	@Param		city_code	query		string		true	"city's code"
+//	@Param		input		body		model.Univ	true	"university data"
+//	@Success	200			{object}	response.Success
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/univs/update [put]
 func (h *Handler) UpdateUniv(c *gin.Context) {
 	cityCode := c.Query("city_code")
 
@@ -81,15 +81,15 @@ func (h *Handler) UpdateUniv(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusAccepted, "university was updated")
 }
 
-// @Summary	DeleteUniversity
-// @Security	Token
-// @Tags		universities
-// @Accept		json
-// @Produce	json
-// @Param		univ_code	query		string	true	"university's code"
-// @Success	200			{object}	response.Success
-// @Failure	400			{object}	response.Error
-// @Router		/logged/univs/delete [delete]
+//	@Summary	DeleteUniversity
+//	@Security	Token
+//	@Tags		universities
+//	@Accept		json
+//	@Produce	json
+//	@Param		univ_code	query		string	true	"university's code"
+//	@Success	200			{object}	response.Success
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/univs/delete [delete]
 func (h *Handler) DeleteUniv(c *gin.Context) {
 	univCode := c.Query("univ_code")
 
@@ -100,15 +100,15 @@ func (h *Handler) DeleteUniv(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusAccepted, "university was deleted")
 }
 
-// @Summary	GetUniversitiesByCity
-// @Security	Token
-// @Tags		universities
-// @Accept		json
-// @Produce	json
-// @Param		city_code	query		string	true	"city's code"
-// @Success	200			{object}	[]model.Univ
-// @Failure	400			{object}	response.Error
-// @Router		/logged/univs/list [get]
+//	@Summary	GetUniversitiesByCity
+//	@Security	Token
+//	@Tags		universities
+//	@Accept		json
+//	@Produce	json
+//	@Param		city_code	query		string	true	"city's code"
+//	@Success	200			{object}	[]model.Univ
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/univs/list [get]
 func (h *Handler) GetUnivsByCity(c *gin.Context) {
 	cityCode := c.Query("city_code")
 
