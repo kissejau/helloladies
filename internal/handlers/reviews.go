@@ -1,12 +1,23 @@
 package handlers
 
 import (
-	"github.com/gin-gonic/gin"
 	"helloladies/internal/model"
 	"helloladies/pkg/response"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
+//	@Summary	CreateReview
+//	@Security	Token
+//	@Tags		reviews
+//	@Accept		json
+//	@Produce	json
+//	@Param		teacher_code	query		string			true	"teacher's code"
+//	@Param		input			body		model.Review	true	"review's data"
+//	@Success	200				{object}	response.Success
+//	@Failure	400				{object}	response.Error
+//	@Router		/logged/reviews/create [post]
 func (h *Handler) CreateReview(c *gin.Context) {
 	userId := getUserId(c)
 	teacherCode := c.Query("teacher_code")
@@ -24,6 +35,14 @@ func (h *Handler) CreateReview(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusCreated, "review was created")
 }
 
+//	@Summary	ListReviews
+//	@Security	Token
+//	@Tags		reviews
+//	@Accept		json
+//	@Produce	json
+//	@Success	200	{object}	[]model.Review
+//	@Failure	400	{object}	response.Error
+//	@Router		/logged/reviews/all [get]
 func (h *Handler) ListReviews(c *gin.Context) {
 	reviews, err := h.services.ReviewsService.List()
 	if err != nil {
@@ -34,6 +53,15 @@ func (h *Handler) ListReviews(c *gin.Context) {
 	c.JSON(http.StatusAccepted, reviews)
 }
 
+//	@Summary	GetReviewsByTeacher
+//	@Security	Token
+//	@Tags		reviews
+//	@Accept		json
+//	@Produce	json
+//	@Param		teacher_code	query		string	true	"teacher's code"
+//	@Success	200				{object}	[]model.Review
+//	@Failure	400				{object}	response.Error
+//	@Router		/logged/reviews/list [get]
 func (h *Handler) GetReviewsByTeacher(c *gin.Context) {
 	teacherCode := c.Query("teacher_code")
 
@@ -46,6 +74,16 @@ func (h *Handler) GetReviewsByTeacher(c *gin.Context) {
 	c.JSON(http.StatusAccepted, reviews)
 }
 
+//	@Summary	UpdateReview
+//	@Security	Token
+//	@Tags		reviews
+//	@Accept		json
+//	@Produce	json
+//	@Param		teacher_code	query		string			true	"teacher's code"
+//	@Param		input			body		model.Review	true	"review's data"
+//	@Success	200				{object}	response.Success
+//	@Failure	400				{object}	response.Error
+//	@Router		/logged/reviews/update [put]
 func (h *Handler) UpdateReview(c *gin.Context) {
 	userId := getUserId(c)
 	teacherCode := c.Query("teacher_code")
@@ -63,6 +101,15 @@ func (h *Handler) UpdateReview(c *gin.Context) {
 	response.NewSuccessResponse(c, http.StatusAccepted, "review was updated")
 }
 
+//	@Summary	DeleteReviews
+//	@Security	Token
+//	@Tags		reviews
+//	@Accept		json
+//	@Produce	json
+//	@Param		review_code	query		string	true	"review's code"
+//	@Success	200			{object}	response.Success
+//	@Failure	400			{object}	response.Error
+//	@Router		/logged/reviews/delete [delete]
 func (h *Handler) DeleteReview(c *gin.Context) {
 	reviewCode := c.Query("review_code")
 
